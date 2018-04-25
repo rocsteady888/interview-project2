@@ -25,16 +25,14 @@ function start() {
 
   connection.query("SELECT * FROM characters", function (err, results) {
     if (err) throw err;
-    // instantiate
+    // instantiate from cli-table package
     let table = new Table({
       head: ['ID', 'First Name', 'Last Name', 'Home']
-      , colWidths: [10, 10, 10, 10]
+      //adjust table display settings
+      , colWidths: [5, 12, 12, 12]
     });
-    //characterArray is for 
-    let characterArray = [];
     for (var i = 0; i < results.length; i++) {
       //first name is required and should not be null
-      characterArray.push(results[i].first_name);
       //last name can be null and cli-table looks for a string
       //these ternary operators makes last_name and home empty string in the event they are null
       let lastName = results[i].last_name ? results[i].last_name : " ";
@@ -46,6 +44,7 @@ function start() {
     }
     // this displays a table in the terminal for easier viewing
     console.log(table.toString());
+    console.log("Sorry, this table is not responsive.  If you are having trouble viewing the data please resize your shell.");
     console.log("Add a new character.");
     // prompt for info about the item
     inquirer
